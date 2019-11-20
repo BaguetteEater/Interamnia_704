@@ -143,9 +143,6 @@ PlayerSettings:
     oculus:
       sharedDepthBuffer: 1
       dashSupport: 1
-      lowOverheadMode: 0
-      protectedContext: 0
-      v2Signing: 0
     enable360StereoCapture: 0
   protectGraphicsMemory: 0
   enableFrameTimingStats: 0
@@ -624,7 +621,7 @@ PlayerSettings:
   apiCompatibilityLevel: 6
   cloudProjectId: 913b9754-c10a-4505-8350-5bfb4c18b192
   framebufferDepthMemorylessMode: 0
-  projectName: RV01_POC
+  projectName: Interamnia
   organizationId: telemaque
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0

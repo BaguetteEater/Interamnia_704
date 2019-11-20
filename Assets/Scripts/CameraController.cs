@@ -27,7 +27,7 @@ public class CameraController : MonoBehaviour
         rotation.x = Mathf.Clamp(rotation.x, -20f, 20f);
         rotation.y = Mathf.Clamp(rotation.y, -35f, 35f);
 
-        transform.eulerAngles = new Vector2(0,rotation.y) * lookSpeed;
+        transform.eulerAngles = new Vector2(0, rotation.y) * lookSpeed;
         Camera.main.transform.localRotation = Quaternion.Euler(rotation.x * lookSpeed, rotation.y * lookSpeed, 0);
     }
 }
