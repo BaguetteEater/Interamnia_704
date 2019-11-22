@@ -1,13 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 
 public class SpaceshipController : MonoBehaviour
 {
     private Rigidbody rigidbody;
 
-    public uint forwardSpeed { get; set; }
-    public int verticalSpeed { get; set; }
+    public uint forwardSpeed { get; set; } // Should be between 0 and 100
+    public int verticalSpeed { get; set; } 
     public int horizontalSpeed { get; set; }
 
     // Start is called before the first frame update
@@ -29,13 +28,28 @@ public class SpaceshipController : MonoBehaviour
         MoveVerticaly();
     }
 
+    public void Decelarate(uint amount)
+    {
+
+        if (this.rigidbody.velocity.magnitude > amount)
+        {
+            this.rigidbody.AddForce(- this.transform.forward * amount);
+        }
+        else
+        {
+            this.rigidbody.velocity = Vector3.zero;
+        }
+
+    }
+
     private void MoveForward()
     {
         this.rigidbody.AddForce(this.transform.forward * this.forwardSpeed);
-        // ToDo: Either put the camera into the Spaceship or move it independently
+        this.forwardSpeed = 0;
+
         // ToDo: Play engine sounds
     }
-    
+
     private void MoveVerticaly()
     {
         this.rigidbody.AddTorque(this.transform.right * - this.verticalSpeed);
