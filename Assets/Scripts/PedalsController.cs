@@ -10,16 +10,18 @@ public class PedalsController : MonoBehaviour
     
     void Start()
     {
+		// UnityEngine.XR.InputTracking.disablePositionalTracking = true;
+
         this.spaceshipController = spaceship.GetComponent<SpaceshipController>();
 
         try
         {
-            Input.GetAxis("Thruster");
+            Debug.Log(Input.GetAxis("Thruster"));
             Debug.Log("PedalsController successfully initiated.");
         }
         catch (UnityException exc)
         {
-            Debug.LogError("Missing Thruster Axis!");
+            Debug.Log("Missing Thruster Axis!");
         }
     }
 

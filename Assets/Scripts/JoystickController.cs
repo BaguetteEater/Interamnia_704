@@ -9,7 +9,7 @@ public class JoystickController : MonoBehaviour {
 		get { return SteamVR_Controller.Input((int) hand.index); }
 	}
 	private bool grabed;
-		
+
 	// Use this for initialization
 	void Start () {
 		// trackedObj = GetComponent<SteamVR_TrackedObject>();
@@ -28,8 +28,10 @@ public class JoystickController : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		if (hand != null) {
+	void FixedUpdate () {
+		
+		if (hand != null) 
+		{
 			if (device.GetHairTriggerDown())
 			{
 				Debug.Log(gameObject.name + " Grabed = true ");
@@ -42,7 +44,8 @@ public class JoystickController : MonoBehaviour {
 				grabed = false;
 			}
 
-			if (grabed) {
+			if (grabed) 
+			{
 				this.transform.Rotate(hand.gameObject.transform.rotation.eulerAngles);
 			}
 		}

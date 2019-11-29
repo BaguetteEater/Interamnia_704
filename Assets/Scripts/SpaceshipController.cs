@@ -39,7 +39,16 @@ public class SpaceshipController : MonoBehaviour
         {
             this.rigidbody.velocity = Vector3.zero;
         }
+    }
 
+    public void ChangePitchAxis(int amount)
+    {
+        this.verticalSpeed += amount;
+    }
+
+    public void ChangeYawAxis(int amount)
+    {
+        this.horizontalSpeed += amount;
     }
 
     private void MoveForward()
@@ -52,11 +61,13 @@ public class SpaceshipController : MonoBehaviour
 
     private void MoveVerticaly()
     {
-        this.rigidbody.AddTorque(this.transform.right * - this.verticalSpeed);
+        //this.rigidbody.AddTorque(this.transform.right * - this.verticalSpeed);
+        transform.Rotate(this.verticalSpeed, 0f, 0f, Space.Self);
     }
 
     private void MoveHorizontaly()
     {
-        this.rigidbody.AddTorque(this.transform.forward * - this.horizontalSpeed);
+        //this.rigidbody.AddTorque(this.transform.forward * - this.horizontalSpeed);
+        transform.Rotate(0f, this.horizontalSpeed, 0f, Space.Self);
     }
 }
