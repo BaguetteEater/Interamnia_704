@@ -50,8 +50,8 @@ public class SpaceshipPhysics : MonoBehaviour
     {
         if (rbody != null)
         {
-            Debug.Log("appliedForce : " + appliedLinearForce);
-            Debug.Log("physicsVelocity : " + this.rbody.velocity);
+            //Debug.Log("appliedForce : " + appliedLinearForce);
+            //Debug.Log("physicsVelocity : " + this.rbody.velocity);
             
             // When moving forward, velocity.z value is between [0;+infinite]
             // If velocity is slow and the force push backward, the force is set at 0 to not apply it

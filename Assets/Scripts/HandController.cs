@@ -26,13 +26,13 @@ public class HandController : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other) {
-        if(other.gameObject.CompareTag("handable")){
+        if(other.gameObject.CompareTag("Handable")){
             candidatSelection = other.gameObject;
         }
     }
 
     private void OnTriggerExit(Collider other) {
-        if(other.gameObject.CompareTag("handable")){
+		if(other.gameObject.CompareTag("Handable") && (other.gameObject == selected || other.gameObject == candidatSelection) ){
             candidatSelection = null;
             selected = null;
         }

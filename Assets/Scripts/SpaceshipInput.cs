@@ -37,17 +37,30 @@ public class SpaceshipInput : MonoBehaviour
     // Keep a reference to the ship this is attached to just in case.
     private Spaceship ship;
 
+	// To get joystick input
+	private JoystickController joystickInput;
+
+	public GameObject joystick;
+
     private void Awake()
     {
         rbody = GetComponent<Rigidbody>();
         ship = GetComponent<Spaceship>();
     }
 
+	private void Start()
+	{
+		joystickInput = joystick.transform.GetComponent<JoystickController>();
+	}
+
     private void Update()
     {
 
         pitch = Input.GetAxis("Vertical");
         yaw = Input.GetAxis("Horizontal");
+
+		//pitch = joystickInput.getPitch();
+		//yaw = joystickInput.getYaw();
 
         if (addRoll)
             roll = -Input.GetAxis("Horizontal") * 0.5f;
@@ -102,7 +115,6 @@ public class SpaceshipInput : MonoBehaviour
 
         // When moving forward, velocity.z value is between [0;+infinite]
         float target = throttle;
-
         // Pedals's input is expected between -1 and 1
         target = Input.GetAxis("Thruster");
 

@@ -46,7 +46,10 @@ public class JoystickController : MonoBehaviour {
 
 			if (grabed) 
 			{
-				this.transform.Rotate(hand.gameObject.transform.rotation.eulerAngles);
+				Debug.Log(this.transform.rotation);
+				Debug.Log(hand.gameObject.transform.rotation);
+
+				this.transform.rotation = hand.gameObject.transform.rotation;
 			}
 		}
 	}
@@ -59,4 +62,16 @@ public class JoystickController : MonoBehaviour {
 			hand = null;
 		}
 	}
+
+	public float getPitch() 
+	{
+		// rotation.x is between 0 and -1, we want between 1 and -1
+		return this.transform.rotation.x;
+	}
+
+	public float getYaw() 
+	{
+		return this.transform.rotation.z;
+	}
+		
 }
