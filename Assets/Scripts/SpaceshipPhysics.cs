@@ -15,7 +15,7 @@ public class SpaceshipPhysics : MonoBehaviour
     public Vector3 linearForce = new Vector3(100.0f, 100.0f, 100.0f);
 
     [Tooltip("X: Pitch\nY: Yaw\nZ: Roll")]
-    public Vector3 angularForce = new Vector3(100.0f, 100.0f, 100.0f);
+    public Vector3 angularForce = new Vector3(1.0f, 1.0f, 1.0f);
 
     [Range(0.0f, 1.0f)]
     [Tooltip("Multiplier for longitudinal thrust when reverse thrust is requested.")]

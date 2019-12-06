@@ -6,10 +6,12 @@ using UnityEngine;
 public class PedalsController : MonoBehaviour
 {
     public GameObject spaceship;
+	private SpaceshipInput spaceshipInput;
         
     void Start()
     {
 		// UnityEngine.XR.InputTracking.disablePositionalTracking = true;
+		spaceshipInput = spaceship.GetComponent<SpaceshipInput>();
 
         try
         {
@@ -26,24 +28,6 @@ public class PedalsController : MonoBehaviour
     {
         float thruster = Input.GetAxis("Thruster");
 
-        if (thruster < 0)
-        {
-            OnBrakeInput(thruster);
-        } else if (thruster > 0)
-        {
-            OnAcceleratorInput(thruster);
-        }
-    }
-
-    // Intensity should be between 0 and 1
-    private void OnAcceleratorInput(float intensity)
-    {
-        //spaceshipController.forwardSpeed = (uint) Math.Truncate(intensity * 100);
-    }
-
-
-    private void OnBrakeInput(float intensity)
-    {
-        //this.spaceshipController.Decelarate((uint) - Math.Truncate(intensity * 100));
+		spaceshipInput.UpdateThrottle(thruster);
     }
 }

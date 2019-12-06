@@ -10,10 +10,13 @@ public class JoystickController : MonoBehaviour {
 	}
 	private bool grabed;
 
-	// Use this for initialization
+	public GameObject spaceship;
+	private SpaceshipInput spaceshipInput;
+
 	void Start () {
-		// trackedObj = GetComponent<SteamVR_TrackedObject>();
 		grabed = false;
+		spaceshipInput = spaceship.GetComponent<SpaceshipInput>();
+		// initalRotation = this.gameObject.transform.rotation;
 	}
 
 	private void OnTriggerEnter(Collider other) 
@@ -36,20 +39,27 @@ public class JoystickController : MonoBehaviour {
 			{
 				Debug.Log(gameObject.name + " Grabed = true ");
 				grabed = true;
+				device.TriggerHapticPulse(2000);
+				device.TriggerHapticPulse(2000);
 			}
 
 			if (device.GetHairTriggerUp())
 			{
 				Debug.Log(gameObject.name + " Grabed = false");
 				grabed = false;
+				hand = null;
+				// this.transform.rotation = this.initalRotation;
 			}
 
 			if (grabed) 
 			{
-				Debug.Log(this.transform.rotation);
-				Debug.Log(hand.gameObject.transform.rotation);
+				// Move the joystick
+				Quaternion rotation = hand.gameObject.transform.rotation;
+				this.transform.rotation = new Quaternion(rotation.x + 0.55f, rotation.y, rotation.z, rotation.w);
 
-				this.transform.rotation = hand.gameObject.transform.rotation;
+				// Move the spaceship
+				Debug.Log(rotation.x);
+				spaceshipInput.UpdatePitch(rotation.x);
 			}
 		}
 	}
@@ -59,19 +69,7 @@ public class JoystickController : MonoBehaviour {
 		if (other.CompareTag("Hand"))
 		{
 			Debug.Log ("Hand left the trigger");
-			hand = null;
+			//hand = null;
 		}
 	}
-
-	public float getPitch() 
-	{
-		// rotation.x is between 0 and -1, we want between 1 and -1
-		return this.transform.rotation.x;
-	}
-
-	public float getYaw() 
-	{
-		return this.transform.rotation.z;
-	}
-		
 }

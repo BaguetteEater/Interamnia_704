@@ -25,7 +25,6 @@ public class Spaceship : MonoBehaviour
     private static Spaceship playerShip;
 
     // Getters for external objects to reference things like input.
-    public bool UsingMouseInput { get { return input.usePedalsInput; } }
     public Vector3 Velocity { get { return physics.Rigidbody.velocity; } }
     public float Throttle { get { return input.throttle; } }
 
