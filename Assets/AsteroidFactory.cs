@@ -13,7 +13,7 @@ public class AsteroidFactory : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        bounds = GetComponent<MeshRenderer>().bounds;
+        bounds = GetComponent<Renderer>().bounds;
         count = 0;
     }
 
@@ -43,7 +43,8 @@ public class AsteroidFactory : MonoBehaviour
 
     public bool IsOutOfBounds(GameObject gameObject)
     {
-        return this.bounds.Contains(gameObject.transform.position);
+        Debug.Log(this.bounds.extents);
+        return !this.bounds.Contains(gameObject.transform.position);
     }
 
     public void DestroyAsteroid(GameObject asteroid)
