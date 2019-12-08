@@ -1,14 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class AsteroidFactory : MonoBehaviour
 {
-    public GameObject asteroidPrefab;
+    public GameObject spaceship;
+    public GameObject[] asteroidPrefabs;
+    public GameObject asteroidsParent;
     public int maximum;
 
     private Bounds bounds;
     private int count;
+    private int frame;
 
     // Start is called before the first frame update
     void Start()
@@ -18,20 +22,27 @@ public class AsteroidFactory : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         Vector3 center = this.transform.position;
+        
+        if (frame == 200)
+        {
+            this.transform.position = spaceship.transform.position;
+            frame = 0;
+        }
 
         if (count < maximum)
         {
             GameObject asteroid = Instantiate(
-                asteroidPrefab,
+                asteroidPrefabs[UnityEngine.Random.Range(0, asteroidPrefabs.Length)],
                 center + new Vector3(
-                    Random.Range(bounds.min.x, bounds.max.x),
-                    Random.Range(bounds.min.y, bounds.max.y),
-                    Random.Range(bounds.min.z, bounds.max.z)
+                    UnityEngine.Random.Range(bounds.min.x, bounds.max.x),
+                    UnityEngine.Random.Range(bounds.min.y, bounds.max.y),
+                    UnityEngine.Random.Range(bounds.min.z, bounds.max.z)
                 ),
-                Quaternion.identity, null
+                Quaternion.identity,
+                asteroidsParent?.transform
             ) as GameObject;
 
             AsteroidFactory asteroidFactory = this;
@@ -39,11 +50,12 @@ public class AsteroidFactory : MonoBehaviour
 
             count++;
         }
+
+        frame++;
     }
 
     public bool IsOutOfBounds(GameObject gameObject)
     {
-        Debug.Log(this.bounds.extents);
         return !this.bounds.Contains(gameObject.transform.position);
     }
 

@@ -13,15 +13,13 @@ public class AsteroidController : MonoBehaviour
     {
         frames++;
 
-        if(frames == 100)
+        if (frames == 100)
         {
             if (asteroidFactory.IsOutOfBounds(this.gameObject))
             {
                 asteroidFactory.DestroyAsteroid(this.gameObject);
             }
-
-            Debug.Log(asteroidFactory.IsOutOfBounds(this.gameObject));
-
+            
             frames = 0;
         }
     }
