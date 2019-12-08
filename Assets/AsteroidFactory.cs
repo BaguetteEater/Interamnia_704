@@ -5,14 +5,12 @@ using UnityEngine;
 
 public class AsteroidFactory : MonoBehaviour
 {
-    public GameObject spaceship;
     public GameObject[] asteroidPrefabs;
     public GameObject asteroidsParent;
     public int maximum;
 
     private Bounds bounds;
     private int count;
-    private int frame;
 
     // Start is called before the first frame update
     void Start()
@@ -25,12 +23,6 @@ public class AsteroidFactory : MonoBehaviour
     void FixedUpdate()
     {
         Vector3 center = this.transform.position;
-        
-        if (frame == 200)
-        {
-            this.transform.position = spaceship.transform.position;
-            frame = 0;
-        }
 
         if (count < maximum)
         {
@@ -50,13 +42,11 @@ public class AsteroidFactory : MonoBehaviour
 
             count++;
         }
-
-        frame++;
     }
 
     public bool IsOutOfBounds(GameObject gameObject)
     {
-        return !this.bounds.Contains(gameObject.transform.position);
+        return !this.bounds.Contains(gameObject.transform.position + GetComponentInParent<Rigidbody>().transform.position);
     }
 
     public void DestroyAsteroid(GameObject asteroid)
