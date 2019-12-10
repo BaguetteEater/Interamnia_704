@@ -24,5 +24,10 @@ public class KeyboardController : MonoBehaviour
         {
             spaceshipInput.UpdateThrottle(-1);
         }
+         
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            spaceshipInput.Fire();
+        }
     }
 }

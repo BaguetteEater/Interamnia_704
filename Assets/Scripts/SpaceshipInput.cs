@@ -15,6 +15,8 @@ public class SpaceshipInput : MonoBehaviour
     [Range(-1, 1)]
     public float throttle;
 
+    public GameObject laserPrefab;
+
     // How quickly the throttle reacts to input.
     private const float THROTTLE_SPEED = 0.5f;
 
@@ -50,4 +52,18 @@ public class SpaceshipInput : MonoBehaviour
 	{
 		yaw = input;
 	}
- }
+
+    public void Fire()
+    {
+        GameObject laser = Instantiate(
+            laserPrefab,
+            this.transform.position,
+            Quaternion.identity,
+            null
+        ) as GameObject;
+
+        laser.transform.position = this.transform.position + new Vector3(0, -2, 4);
+        laser.transform.localRotation = this.transform.rotation * Quaternion.Euler(50, 0, 0);
+        laser.GetComponent<Rigidbody>().AddForce(this.transform.forward * 10000);
+    }
+}
