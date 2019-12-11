@@ -4,6 +4,7 @@
 //
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 /// <summary>
@@ -25,7 +26,7 @@ public class Spaceship : MonoBehaviour
     private static Spaceship playerShip;
 
     // Getters for external objects to reference things like input.
-    public Vector3 Velocity { get { return physics.Rigidbody.velocity; } }
+    public UnityEngine.Vector3 Velocity { get { return physics.Rigidbody.velocity; } }
     public float Throttle { get { return input.throttle; } }
 
     private void Awake()
@@ -37,7 +38,11 @@ public class Spaceship : MonoBehaviour
     private void Update()
     {
         // Pass the input to the physics to move the ship.
-        physics.SetPhysicsInput(new Vector3(input.strafe, 0.0f, input.throttle), new Vector3(input.pitch, input.yaw, input.roll));
+        physics.SetPhysicsInput(new UnityEngine.Vector3(
+			input.strafe,
+			0.0f,
+			input.throttle
+		), new UnityEngine.Vector3(input.pitch, input.yaw, input.roll));
 
         // If this is the player ship, then set the static reference. If more than one ship
         // is set to player, then whatever happens to be the last ship to be updated will be

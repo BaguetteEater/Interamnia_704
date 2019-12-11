@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class SpaceshipInput : MonoBehaviour
 {
@@ -35,12 +36,19 @@ public class SpaceshipInput : MonoBehaviour
     private void Update()
     {
         strafe = 0.0f;
-        motorSound.pitch = rigidbody.velocity.z / 50;
+        motorSound.pitch = rigidbody.velocity.z / 60;
     }
 
     public void UpdateThrottle(float input) 
 	{
 		throttle = Mathf.MoveTowards(throttle, input, Time.deltaTime * THROTTLE_SPEED);
+
+		// Brake will make the Spaceship less rotating
+		if (input < 0) 
+		{
+			UpdatePitch(0);
+			UpdateYaw(0);
+		}
     }
 
     public void UpdatePitch(float input)

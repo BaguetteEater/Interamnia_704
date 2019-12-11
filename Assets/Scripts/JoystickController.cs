@@ -12,11 +12,12 @@ public class JoystickController : MonoBehaviour {
 
 	public GameObject spaceship;
 	private SpaceshipInput spaceshipInput;
+	private Quaternion initialRotation;
 
 	void Start () {
 		grabed = false;
 		spaceshipInput = spaceship.GetComponent<SpaceshipInput>();
-		// initalRotation = this.gameObject.transform.rotation;
+		initialRotation = this.gameObject.transform.localRotation;
 	}
 
 	private void OnTriggerEnter(Collider other) 
@@ -39,8 +40,7 @@ public class JoystickController : MonoBehaviour {
 			{
 				Debug.Log(gameObject.name + " Grabed = true ");
 				grabed = true;
-				device.TriggerHapticPulse(2000);
-				device.TriggerHapticPulse(2000);
+				device.TriggerHapticPulse(5000);
 			}
 
 			if (device.GetHairTriggerUp())
@@ -48,18 +48,37 @@ public class JoystickController : MonoBehaviour {
 				Debug.Log(gameObject.name + " Grabed = false");
 				grabed = false;
 				hand = null;
-				// this.transform.rotation = this.initalRotation;
+				this.gameObject.transform.localRotation = initialRotation;
 			}
 
 			if (grabed) 
 			{
 				// Move the joystick
-				Quaternion rotation = hand.gameObject.transform.rotation;
-				this.transform.rotation = new Quaternion(rotation.x + 0.55f, rotation.y, rotation.z, rotation.w);
+				Quaternion rotation = hand.gameObject.transform.localRotation;
+
+				this.gameObject.transform.localRotation = new Quaternion(
+					rotation.x + 0.55f,
+					0, 
+					rotation.z,
+					rotation.w
+				);
 
 				// Move the spaceship
-				Debug.Log(rotation.x);
-				spaceshipInput.UpdatePitch(rotation.x);
+				spaceshipInput.UpdatePitch(this.gameObject.transform.localRotation.x / 100);
+				spaceshipInput.UpdateYaw(- this.gameObject.transform.localRotation.z / 100);
+		
+			}
+		}
+	}
+
+	void Update()
+	{
+		if (grabed) 
+		{
+			if (device.GetPressUp(SteamVR_Controller.ButtonMask.Touchpad)) 
+			{
+				spaceshipInput.Fire();
+				device.TriggerHapticPulse(1000);
 			}
 		}
 	}

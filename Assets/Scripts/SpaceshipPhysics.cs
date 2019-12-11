@@ -50,17 +50,10 @@ public class SpaceshipPhysics : MonoBehaviour
     {
         if (rbody != null)
         {
-            //Debug.Log("appliedForce : " + appliedLinearForce);
-            //Debug.Log("physicsVelocity : " + this.rbody.velocity);
-            
-            // When moving forward, velocity.z value is between [0;+infinite]
-            // If velocity is slow and the force push backward, the force is set at 0 to not apply it
-            if(this.rbody.velocity.z >= 0 && this.rbody.velocity.z <= 3 && appliedLinearForce.z < 0)
-            {
-                appliedLinearForce.Set(appliedLinearForce.x, appliedLinearForce.y, 0);
-            }
-
-            rbody.AddRelativeForce(appliedLinearForce * forceMultiplier, ForceMode.Force);            
+			// Max speed
+			if (this.rbody.velocity.z < 100) // TODO: should be abs
+				rbody.AddRelativeForce(appliedLinearForce, ForceMode.Force);
+			
             rbody.AddRelativeTorque(appliedAngularForce * forceMultiplier, ForceMode.Force);
         }
     }
