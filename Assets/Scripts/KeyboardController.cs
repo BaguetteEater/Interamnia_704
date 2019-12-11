@@ -24,7 +24,25 @@ public class KeyboardController : MonoBehaviour
         {
             spaceshipInput.UpdateThrottle(-1);
         }
-         
+
+        if (Input.GetKey(KeyCode.Q))
+        {
+            spaceshipInput.UpdateYaw(-0.1f);
+        } 
+        else if (Input.GetKey(KeyCode.D))
+        {
+            spaceshipInput.UpdateYaw(0.1f);
+        }
+
+        if (Input.GetKey(KeyCode.Z))
+        {
+            spaceshipInput.UpdatePitch(0.1f);
+        }
+        else if (Input.GetKey(KeyCode.S))
+        {
+            spaceshipInput.UpdatePitch(-0.1f);
+        }
+
         if (Input.GetKeyUp(KeyCode.Space))
         {
             spaceshipInput.Fire();
