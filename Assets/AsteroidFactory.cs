@@ -9,13 +9,15 @@ public class AsteroidFactory : MonoBehaviour
     public GameObject asteroidsParent;
     public int maximum;
 
+    private MeshCollider collider; 
     private Bounds bounds;
     private int count;
 
     // Start is called before the first frame update
     void Start()
     {
-        bounds = GetComponent<Renderer>().bounds;
+        collider = GetComponent<MeshCollider>();
+        bounds = collider.bounds;
         count = 0;
     }
 
@@ -23,7 +25,7 @@ public class AsteroidFactory : MonoBehaviour
     void FixedUpdate()
     {
         Vector3 center = this.transform.position;
-
+        
         if (count < maximum)
         {
             GameObject asteroid = Instantiate(
@@ -41,6 +43,13 @@ public class AsteroidFactory : MonoBehaviour
             asteroid.GetComponent<AsteroidController>().SetFactory(ref asteroidFactory);
 
             count++;
+        }
+    }
+
+    private void OnTriggerExit(Collider other) {
+        if (other.gameObject.CompareTag("Asteroid"))
+        {
+            DestroyAsteroid(other.gameObject);
         }
     }
 

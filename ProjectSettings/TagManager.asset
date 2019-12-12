@@ -5,6 +5,12 @@ TagManager:
   serializedVersion: 2
   tags:
   - handable
+  - Enemy
+  - projectile
+  - FxTemporaire
+  - Hand
+  - Handable
+  - Asteroid
   layers:
   - Default
   - TransparentFX

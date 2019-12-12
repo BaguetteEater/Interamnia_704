@@ -11,7 +11,7 @@ public class AsteroidController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        frames++;
+        /*frames++;
 
         if (frames == 100)
         {
@@ -21,7 +21,7 @@ public class AsteroidController : MonoBehaviour
             }
             
             frames = 0;
-        }
+        }*/
     }
 
     public void SetFactory(ref AsteroidFactory asteroidFactory2)
