@@ -95,7 +95,7 @@ public class AsteroidFactory : MonoBehaviour
 
     private bool IsOutOfNoGenZone(Vector3 asteroidPosition)
     {
-        if (noGenBounds.Contains(asteroidPosition))
+        if (noGenBounds.Contains(asteroidPosition + this.worldCenter))
         {
             return false;
         }

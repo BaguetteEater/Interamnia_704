@@ -44,17 +44,33 @@ public class SpaceshipPhysics : MonoBehaviour
         }
 
         ship = GetComponent<Spaceship>();
+		rbody.maxAngularVelocity = 1;
     }
 
     void FixedUpdate()
     {
         if (rbody != null)
         {
-			// Max speed
-			if (this.rbody.velocity.z < 100) // TODO: should be abs
+			Debug.Log(appliedLinearForce.z);
+			if (appliedLinearForce.z < 0)
+			{
+				this.rbody.AddRelativeForce(new Vector3(
+					appliedLinearForce.x, 
+					appliedLinearForce.y, 
+					-this.rbody.velocity.z * (-appliedLinearForce.z)/100
+				));
+			} 
+			else if (Mathf.Abs(this.rbody.velocity.z) < 100) 
+			{
+				// Max speed
+				// TODO: should be abs
 				rbody.AddRelativeForce(appliedLinearForce, ForceMode.Force);
+			}
 			
             rbody.AddRelativeTorque(appliedAngularForce * forceMultiplier, ForceMode.Force);
+
+			//todo voir comment on tourne
+
         }
     }
 
