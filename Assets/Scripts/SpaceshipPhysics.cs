@@ -51,7 +51,6 @@ public class SpaceshipPhysics : MonoBehaviour
     {
         if (rbody != null)
         {
-			Debug.Log(appliedLinearForce.z);
 			if (appliedLinearForce.z < 0)
 			{
 				this.rbody.AddRelativeForce(new Vector3(

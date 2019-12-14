@@ -22,7 +22,6 @@ public class JoystickController : MonoBehaviour {
 
 	private void OnTriggerEnter(Collider other) 
 	{
-		Debug.Log ("trigger enter");
 		if (other.CompareTag("Hand"))
 		{
 			Debug.Log ("Hand Triggered");

@@ -5,81 +5,58 @@ using UnityEngine;
 
 public class AsteroidFactory : MonoBehaviour
 {
-    public GameObject[] asteroidPrefabs;
-    public GameObject asteroidsParent;
+    private GameObject[] asteroidPrefabs;
+    private GameObject asteroidParent;
 
-    public Camera camera;
-
-    public int maximum;
+    public Vector3 centreZone;
 
     private MeshCollider collider; 
 
     private Bounds genBounds;
-    private Bounds noGenBounds;
 
-    private Vector3 worldCenter;
+    private Vector3 zoneCenter;
+
+    private AsteroidFactoryManager manager;
 
     private int count;
-    private int rayCastLength = 100;
+    private int maximum;
+    private int place;
 
-    private void Awake() {
-        collider = GetComponent<MeshCollider>();
+    public void GenerateAsteroids()
+    {
+        collider = this.gameObject.AddComponent<MeshCollider>();
+        collider.convex = true;
+        collider.isTrigger = true;
 
         genBounds = collider.bounds;
         count = 0;
-        
-        noGenBounds = GetComponentInChildren<MeshRenderer>().bounds;
-    }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        this.worldCenter = this.transform.position;
+        this.zoneCenter = this.transform.position;
         for (int i = 0; i < maximum; i++)
         {
-            Instantiate(
-                asteroidPrefabs[UnityEngine.Random.Range(0, asteroidPrefabs.Length)],
-                this.worldCenter + new Vector3(
+            CreateAsteroid(new Vector3 (
                     UnityEngine.Random.Range(genBounds.min.x, genBounds.max.x),
                     UnityEngine.Random.Range(genBounds.min.y, genBounds.max.y),
                     UnityEngine.Random.Range(genBounds.min.z, genBounds.max.z)
-                ),
-                Quaternion.identity,
-                asteroidsParent?.transform
-            );
+                ));
         }
 
         count = maximum;
-        
     }
 
-    // Update is called once per frame
-    void FixedUpdate()
+    private void OnTriggerExit(Collider other) 
     {
-        this.worldCenter = this.transform.position;
-        if (count < maximum)
+        if (other.gameObject.CompareTag("spaceship"))
         {
-            Vector3 asteroidPosition = this.worldCenter + new Vector3(
-                    UnityEngine.Random.Range(genBounds.min.x, genBounds.max.x),
-                    UnityEngine.Random.Range(genBounds.min.y, genBounds.max.y),
-                    UnityEngine.Random.Range(genBounds.min.z, genBounds.max.z)
-            );
-
-            if (IsOutOfNoGenZone(asteroidPosition))
-            {
-                GameObject asteroid = CreateAsteroid(asteroidPosition);
-                AsteroidFactory asteroidFactory = this;
-                asteroid.GetComponent<AsteroidController>().SetFactory(ref asteroidFactory);
-            }
-
-            count++;
+            manager.ShipLeaveFactory(this.place);
         }
     }
 
-    private void OnTriggerExit(Collider other) {
-        if (other.gameObject.CompareTag("Asteroid"))
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("spaceship"))
         {
-            DestroyAsteroid(other.gameObject);
+            manager.SetInFactoryNumber(this.place);
         }
     }
 
@@ -89,24 +66,49 @@ public class AsteroidFactory : MonoBehaviour
                     asteroidPrefabs[UnityEngine.Random.Range(0, asteroidPrefabs.Length)],
                     asteroidPosition,
                     Quaternion.identity,
-                    asteroidsParent?.transform
+                    asteroidParent?.transform
                 ) as GameObject;
-    }
-
-    private bool IsOutOfNoGenZone(Vector3 asteroidPosition)
-    {
-        if (noGenBounds.Contains(asteroidPosition + this.worldCenter))
-        {
-            return false;
-        }
-        
-        return true;
     }
 
     public void DestroyAsteroid(GameObject asteroid)
     {
         Destroy(asteroid);
         count--;
+    }
+
+    public void SetAsteroidsPrefab(GameObject[] asteroidPrefabs)
+    {
+        this.asteroidPrefabs = asteroidPrefabs;
+    }
+
+    public void SetAsteroidParent(GameObject asteroidParent)
+    {
+        this.asteroidParent = asteroidParent;
+    }
+
+    public GameObject GetAsteroidParent()
+    {
+        return this.asteroidParent;
+    }
+
+    public void SetScale(Vector3 scale)
+    {
+        this.gameObject.transform.localScale = scale;
+    }
+
+    public void SetMaximum(int maximum)
+    {
+        this.maximum = maximum;
+    }
+
+    public void SetAsteroidFactoryManager(AsteroidFactoryManager manager)
+    {
+        this.manager = manager;
+    }
+
+    public void SetPlace(int place)
+    {
+        this.place = place;
     }
 }
 
