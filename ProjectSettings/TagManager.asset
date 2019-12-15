@@ -12,6 +12,7 @@ TagManager:
   - Handable
   - Asteroid
   - spaceship
+  - Laser
   layers:
   - Default
   - TransparentFX

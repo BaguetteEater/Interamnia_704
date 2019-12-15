@@ -58,13 +58,12 @@ public class SpaceshipInput : MonoBehaviour
     {
         GameObject laser = Instantiate(
             laserPrefab,
-            this.transform.position,
+            this.transform.forward + new Vector3(this.transform.rotation.x, 0, 0),
             Quaternion.identity,
             null
         ) as GameObject;
 
-        laser.transform.position = this.transform.position + new Vector3(0, -2, 4);
-        laser.transform.localRotation = this.transform.rotation * Quaternion.Euler(50, 0, 0);
+        laser.transform.localRotation = this.transform.rotation * Quaternion.Euler(90, 0, 0);
         laser.GetComponent<Rigidbody>().AddForce(this.transform.forward * 10000);
     }
 }

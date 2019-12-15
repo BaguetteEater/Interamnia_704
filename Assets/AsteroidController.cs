@@ -4,28 +4,18 @@ using UnityEngine;
 
 public class AsteroidController : MonoBehaviour
 {
-    private AsteroidFactory asteroidFactory;
-
-    private int frames = 0;
-
-    // Update is called once per frame
-    void FixedUpdate()
+    private void Start()
     {
-        /*frames++;
-
-        if (frames == 100)
-        {
-            if (asteroidFactory.IsOutOfBounds(this.gameObject))
-            {
-                asteroidFactory.DestroyAsteroid(this.gameObject);
-            }
-            
-            frames = 0;
-        }*/
+        
     }
 
-    public void SetFactory(ref AsteroidFactory asteroidFactory2)
+    void OnTriggerEnter(Collider other)
     {
-        this.asteroidFactory = asteroidFactory2;
+        if (other.gameObject.CompareTag("Laser"))
+        {
+            Debug.Log("laser");
+            Destroy(other.gameObject);
+            Destroy(this.gameObject); // todo: decrease maximum count
+        }
     }
 }

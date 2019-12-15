@@ -27,20 +27,20 @@ public class KeyboardController : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Q))
         {
-            spaceshipInput.UpdateYaw(-0.1f);
+            spaceshipInput.UpdateYaw(-0.01f);
         } 
         else if (Input.GetKey(KeyCode.D))
         {
-            spaceshipInput.UpdateYaw(0.1f);
+            spaceshipInput.UpdateYaw(0.01f);
         }
 
         if (Input.GetKey(KeyCode.Z))
         {
-            spaceshipInput.UpdatePitch(0.1f);
+            spaceshipInput.UpdatePitch(0.01f);
         }
         else if (Input.GetKey(KeyCode.S))
         {
-            spaceshipInput.UpdatePitch(-0.1f);
+            spaceshipInput.UpdatePitch(-0.01f);
         }
 
         if (Input.GetKeyUp(KeyCode.Space))
