@@ -22,6 +22,15 @@ public class AsteroidFactory : MonoBehaviour
     private int maximum;
     private int place;
 
+    private void Start()
+    {
+        CreateAsteroid(new Vector3(
+                   0,
+                    -1,
+                    20)
+                );
+    }
+
     public void GenerateAsteroids()
     {
         collider = this.gameObject.AddComponent<MeshCollider>();
