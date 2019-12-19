@@ -17,6 +17,8 @@ public class SpaceshipInput : MonoBehaviour
     public float throttle;
 
     public GameObject laserPrefab;
+    private int laserAmmo;
+    private const int maxLaserAmmo = 10;
 
     // How quickly the throttle reacts to input.
     private const float THROTTLE_SPEED = 0.5f;
@@ -27,6 +29,8 @@ public class SpaceshipInput : MonoBehaviour
     private void Start()
     {
         rigidbody = GetComponent<Rigidbody>();
+
+        laserAmmo = maxLaserAmmo;
 
         motorSound = GetComponents<AudioSource>()[1];
         motorSound.loop = true;
@@ -56,14 +60,24 @@ public class SpaceshipInput : MonoBehaviour
 
     public void Fire()
     {
-        GameObject laser = Instantiate(
-            laserPrefab,
-            this.gameObject.transform.position + new Vector3(this.gameObject.transform.rotation.x, 0, 0),
-            Quaternion.identity,
-            null
-        ) as GameObject;
+        if (laserAmmo > 0)
+        {
+            GameObject laser = Instantiate(
+                laserPrefab,
+                this.gameObject.transform.position + new Vector3(this.gameObject.transform.rotation.x, 0, 0),
+                Quaternion.identity,
+                null
+            ) as GameObject;
 
-        laser.transform.rotation = this.transform.rotation * Quaternion.Euler(90, 0, 0);
-        laser.GetComponent<Rigidbody>().AddRelativeForce(this.transform.forward * 10000);
+            laser.transform.rotation = this.transform.rotation * Quaternion.Euler(90, 0, 0);
+            laser.GetComponent<Rigidbody>().AddRelativeForce(this.transform.forward * 10000);
+        }
+
+        laserAmmo--;
+    }
+
+    public void Reload()
+    {
+        laserAmmo = maxLaserAmmo;
     }
 }

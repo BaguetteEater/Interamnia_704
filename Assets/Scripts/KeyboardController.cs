@@ -47,5 +47,10 @@ public class KeyboardController : MonoBehaviour
         {
             spaceshipInput.Fire();
         }
+
+        if (Input.GetKey(KeyCode.H))
+        {
+            spaceshipInput.Reload();
+        }
     }
 }
