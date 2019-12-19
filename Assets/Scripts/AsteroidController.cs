@@ -23,9 +23,9 @@ public class AsteroidController : MonoBehaviour
         else if (other.gameObject.CompareTag("spaceship"))
         {
             AudioSource.PlayClipAtPoint(explosionSound.clip, this.transform.position);
+            SceneManager.LoadScene("End");
             Destroy(other.gameObject);
             Destroy(this.gameObject);
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
 }

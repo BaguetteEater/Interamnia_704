@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LaserController : MonoBehaviour
 {
-    private const int TIME_OF_LIFE = 1000;
+    private const int TIME_OF_LIFE = 200;
     private int frames = 0;
 
     void FixedUpdate()

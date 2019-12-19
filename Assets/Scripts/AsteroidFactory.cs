@@ -5,19 +5,15 @@ using UnityEngine;
 
 public class AsteroidFactory : MonoBehaviour
 {
+    private const int maximumScale = 5;
+
     private GameObject[] asteroidPrefabs;
     private GameObject asteroidParent;
-
     public Vector3 centreZone;
-
     private MeshCollider collider; 
-
     private Bounds genBounds;
-
     private Vector3 zoneCenter;
-
     private AsteroidFactoryManager manager;
-
     private int count;
     private int maximum;
     private int place;
@@ -71,12 +67,17 @@ public class AsteroidFactory : MonoBehaviour
 
     private GameObject CreateAsteroid(Vector3 asteroidPosition)
     {
-        return Instantiate(
-                    asteroidPrefabs[UnityEngine.Random.Range(0, asteroidPrefabs.Length)],
-                    asteroidPosition,
-                    Quaternion.identity,
-                    asteroidParent?.transform
-                ) as GameObject;
+        GameObject asteroid = Instantiate(
+                                    asteroidPrefabs[UnityEngine.Random.Range(0, asteroidPrefabs.Length)],
+                                    asteroidPosition,
+                                    Quaternion.identity,
+                                    asteroidParent?.transform
+                              ) as GameObject;
+
+        int scale = UnityEngine.Random.Range(1, maximumScale);
+        asteroid.transform.localScale = new Vector3(scale, scale, scale);
+
+        return asteroid;
     }
 
     public void DestroyAsteroid(GameObject asteroid)
