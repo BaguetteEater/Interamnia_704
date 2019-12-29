@@ -14,6 +14,7 @@ public class Controltest : MonoBehaviour
     void Start()
     {
 		trackedObj = GetComponent<SteamVR_TrackedObject>();
+		UnityEngine.XR.InputTracking.Recenter();
     }
 
     // Update is called once per frame

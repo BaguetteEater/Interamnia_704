@@ -17,8 +17,8 @@ public class SpaceshipInput : MonoBehaviour
     public float throttle;
 
     public GameObject laserPrefab;
-    private int laserAmmo;
-    private const int maxLaserAmmo = 10;
+    public int laserAmmo { get; private set;}
+    public int maxLaserAmmo;
 
     // How quickly the throttle reacts to input.
     private const float THROTTLE_SPEED = 0.5f;
@@ -28,7 +28,7 @@ public class SpaceshipInput : MonoBehaviour
 
     private void Start()
     {
-        rigidbody = GetComponent<Rigidbody>();
+		rigidbody = GetComponent<Rigidbody>();
 
         laserAmmo = maxLaserAmmo;
 
@@ -58,9 +58,11 @@ public class SpaceshipInput : MonoBehaviour
 		yaw = input;
 	}
 
-    public void Fire()
+    public bool Fire()
     {
-        if (laserAmmo > 0)
+        laserAmmo--;
+
+        if (laserAmmo >= 0)
         {
             GameObject laser = Instantiate(
                 laserPrefab,
@@ -71,9 +73,14 @@ public class SpaceshipInput : MonoBehaviour
 
             laser.transform.rotation = this.transform.rotation * Quaternion.Euler(90, 0, 0);
             laser.GetComponent<Rigidbody>().AddRelativeForce(this.transform.forward * 10000);
+
+            return true;
+        }
+        else
+        {
+            return false;
         }
 
-        laserAmmo--;
     }
 
     public void Reload()

@@ -18,5 +18,11 @@ public class ButtonsController : MonoBehaviour
         SceneManager.LoadScene("Game");
     }
 
-
+    void Update()
+    {
+        if (Input.GetKey(KeyCode.L))
+        {
+            SceneManager.LoadScene("Game");
+        }
+    }
 }
