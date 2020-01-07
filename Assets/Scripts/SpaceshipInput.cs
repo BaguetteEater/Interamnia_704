@@ -25,8 +25,6 @@ public class SpaceshipInput : MonoBehaviour
 
     private Rigidbody rigidbody;
     private AudioSource motorSound;
-    private AudioSource noAmmoSound;
-    private AudioSource reloadSound;
 
     private void Start()
     {
@@ -37,15 +35,19 @@ public class SpaceshipInput : MonoBehaviour
         motorSound = GetComponents<AudioSource>()[1];
         motorSound.loop = true;
         motorSound.Play();
-
-        reloadSound = GetComponents<AudioSource>()[2];
-        noAmmoSound = GetComponents<AudioSource>()[3];
     }
 
     private void Update()
     {
         strafe = 0.0f;
 		motorSound.pitch = Mathf.Abs(rigidbody.velocity.z) / 60;
+
+
+        Debug.DrawRay(
+            transform.position,
+            new Vector3(transform.forward.x * 50, transform.forward.y * 50, transform.forward.z * 50),
+            Color.white,
+            2.5f);
     }
 
     public void UpdateThrottle(float input) 
@@ -83,10 +85,6 @@ public class SpaceshipInput : MonoBehaviour
         }
         else
         {
-            if(!noAmmoSound.isPlaying)
-            {
-                noAmmoSound.Play();
-            }
             return false;
         }
 
@@ -95,9 +93,5 @@ public class SpaceshipInput : MonoBehaviour
     public void Reload()
     {
         laserAmmo = maxLaserAmmo;
-        if(!reloadSound.isPlaying)
-        {
-            reloadSound.Play();
-        }
     }
 }
