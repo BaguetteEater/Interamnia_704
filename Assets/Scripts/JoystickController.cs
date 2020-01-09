@@ -15,9 +15,11 @@ public class JoystickController : MonoBehaviour {
     public Material highlightMaterial;
     private Material defaultMaterial;
     private MeshRenderer renderer;
-
     private int tick = 0;
-    
+
+    public GameObject infoText;
+    private int grabedTick = 0;
+
 private SpaceshipInput spaceshipInput;
 	private Quaternion initialRotation;
 
@@ -48,9 +50,9 @@ private SpaceshipInput spaceshipInput;
 				Debug.Log(gameObject.name + " Grabed = true ");
 				grabed = true;
 				device.TriggerHapticPulse(5000);
-			}
+            }
 
-			if (device.GetHairTriggerUp())
+            if (device.GetHairTriggerUp())
 			{
 				Debug.Log(gameObject.name + " Grabed = false");
 				grabed = false;
@@ -73,7 +75,6 @@ private SpaceshipInput spaceshipInput;
 				// Move the spaceship
 				spaceshipInput.UpdatePitch(this.gameObject.transform.localRotation.x / 100);
 				spaceshipInput.UpdateYaw(- this.gameObject.transform.localRotation.z / 100);
-		
 			}
 		}
 	}
@@ -87,7 +88,19 @@ private SpaceshipInput spaceshipInput;
 				spaceshipInput.Fire();
 				device.TriggerHapticPulse(1000);
 			}
-		}
+
+            grabedTick++;
+
+            if (grabedTick < 1500)
+            {
+                infoText.GetComponent<TextMesh>().text = "Hold your controller \nvertically to stay stable";
+            }
+            else
+            {
+                infoText.GetComponent<TextMesh>().text = "";
+            }
+
+        }
         else
         {
             // do the highlight
