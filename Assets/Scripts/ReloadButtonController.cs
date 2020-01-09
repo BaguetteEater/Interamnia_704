@@ -13,9 +13,17 @@ public class ReloadButtonController : MonoBehaviour
     public GameObject spaceship;
     private SpaceshipInput spaceshipInput;
 
+    public Material highlightMaterial;
+    private Material defaultMaterial;
+    private MeshRenderer renderer;
+
+    private int tick = 0;
+
     void Start()
     {
         spaceshipInput = spaceship.GetComponent<SpaceshipInput>();
+        renderer = GetComponent<MeshRenderer>();
+        defaultMaterial = renderer.material;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -44,5 +52,16 @@ public class ReloadButtonController : MonoBehaviour
             spaceshipInput.Reload();
             device.TriggerHapticPulse(1000);
         }
+
+        // do the highlight
+        if (((tick / 30) % 2) == 0)
+        {
+            renderer.material = highlightMaterial;
+        }
+        else
+        {
+            renderer.material = defaultMaterial;
+        }
+        tick++;
     }
 }

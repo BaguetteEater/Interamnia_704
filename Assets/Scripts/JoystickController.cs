@@ -11,14 +11,23 @@ public class JoystickController : MonoBehaviour {
 	private bool grabed;
 
 	public GameObject spaceship;
-	private SpaceshipInput spaceshipInput;
+
+    public Material highlightMaterial;
+    private Material defaultMaterial;
+    private MeshRenderer renderer;
+
+    private int tick = 0;
+    
+private SpaceshipInput spaceshipInput;
 	private Quaternion initialRotation;
 
 	void Start () {
 		grabed = false;
 		spaceshipInput = spaceship.GetComponent<SpaceshipInput>();
 		initialRotation = this.gameObject.transform.localRotation;
-	}
+        renderer = GetComponent<MeshRenderer>();
+        defaultMaterial = renderer.material;
+    }
 
 	private void OnTriggerEnter(Collider other) 
 	{
@@ -27,13 +36,12 @@ public class JoystickController : MonoBehaviour {
 			Debug.Log ("Hand Triggered");
 			GameObject grabbingOther = other.gameObject;
 			hand = grabbingOther.GetComponent<SteamVR_TrackedObject>();
-		}
+        }
 	}
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-		
-		if (hand != null) 
+        if (hand != null) 
 		{
 			if (device.GetHairTriggerDown())
 			{
@@ -80,14 +88,28 @@ public class JoystickController : MonoBehaviour {
 				device.TriggerHapticPulse(1000);
 			}
 		}
-	}
+        else
+        {
+            // do the highlight
+            if (((tick / 30) % 2) == 0)
+            {
+                renderer.material = highlightMaterial;
+            }
+            else
+            {
+                renderer.material = defaultMaterial;
+            }
+        }
+
+        tick++;
+    }
 
 	private void OnTriggerExit(Collider other)
 	{
 		if (other.CompareTag("Hand"))
 		{
 			Debug.Log ("Hand left the trigger");
-			//hand = null;
-		}
-	}
+            renderer.material = defaultMaterial;
+}
+    }
 }

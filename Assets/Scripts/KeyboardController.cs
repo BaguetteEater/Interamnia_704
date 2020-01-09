@@ -43,7 +43,7 @@ public class KeyboardController : MonoBehaviour
             spaceshipInput.UpdatePitch(-0.01f);
         }
 
-        if (Input.GetKeyUp(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space))
         {
             spaceshipInput.Fire();
         }
