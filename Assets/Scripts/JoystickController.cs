@@ -83,11 +83,13 @@ private SpaceshipInput spaceshipInput;
 	{
 		if (grabed) 
 		{
-			if (device.GetPressUp(SteamVR_Controller.ButtonMask.Touchpad)) 
+			if (device.GetPress(SteamVR_Controller.ButtonMask.Touchpad)) 
 			{
-				spaceshipInput.Fire();
-				device.TriggerHapticPulse(1000);
-			}
+				if (spaceshipInput.Fire())
+                {
+                    device.TriggerHapticPulse(1000);
+                }
+            }
 
             grabedTick++;
 
